@@ -35,7 +35,7 @@ elif salary_for_tax < 35000:
 	tax_sub_value = 1005
 
 elif salary_for_tax < 55000:
-	tax_rate = 0.35
+	tax_rate = 0.30
 	tax_sub_value = 2755
 
 elif salary_for_tax < 80000:
@@ -50,7 +50,7 @@ else:
 tax_value = salary_for_tax * tax_rate - tax_sub_value
 
 
-print(tax_value)
+print(format(tax_value,".2f"))
 
 
 
