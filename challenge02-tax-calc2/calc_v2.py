@@ -5,17 +5,17 @@ import sys
 
 
 def salary_calc(base_salary):
+
 	social_insurance_rate = {"pension": 0.08, "medical":0.02, "unemployment":0.005, "house_founding":0.06, "birth":0, "injury":0}
 
 	social_insurance_rate_sum = sum(list(social_insurance_rate.values()))
 
-	employee = {}
+	salary_slip = {}
 	
-	employee['social_insurance'] = base_salary * social_insurance_rate_sum
+	salary_slip['social_insurance'] = base_salary * social_insurance_rate_sum
 
 
 	tax_begin_point = 3500
-
 
 	salary_for_tax = base_salary * (1 - social_insurance_rate_sum) - tax_begin_point
 
@@ -53,11 +53,14 @@ def salary_calc(base_salary):
 		tax_sub_value = 13505
 
 
-	employee['tax'] = salary_for_tax * tax_rate - tax_sub_value
+	salary_slip['tax'] = salary_for_tax * tax_rate - tax_sub_value
 
-	employee['net_salary'] = base_salary - employee['social_insurance'] - employee['tax']
+	salary_slip['net_salary'] = base_salary - salary_slip['social_insurance'] - salary_slip['tax']
 
-	return(employee)
+	salary_slip['base_salary'] = base_salary
+
+
+	return(salary_slip)
 
 
 
@@ -78,6 +81,6 @@ for i in range((len(sys.argv) - 1)):
 	
 	print("%d:%.2f" % (emp_id,salary_slip['net_salary']))
 
-
+	print(salary_slip)
 
 
