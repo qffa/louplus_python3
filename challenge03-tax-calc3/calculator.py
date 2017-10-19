@@ -27,7 +27,7 @@ class UserData(object):
 		
 		with open(userdatafile, 'r') as file:
 			for line in file:
-				uid = line.split(',')[0]
+				uid = int(line.split(',')[0])
 				basesalary = float(line.split(',')[1])
 
 				self.userdata[uid] = basesalary
@@ -97,7 +97,7 @@ class UserData(object):
 		with open(outputfile, 'w') as file:
 
 			for i in self.salaryslip:
-				file.write(str(i[0]) + ',' + str(i[1]) + ',' + str(i[2]) + ',' + str(i[3]) + ',' + str(i[4]) + '\n')
+				file.write(str(i[0]) + ',' + str(format(i[1],'.2f')) + ',' + str(format(i[2],'.2f')) + ',' + str(format(i[3],'.2f')) + ',' + str(format(i[4],'.2f')) + '\n')
 
 
 
