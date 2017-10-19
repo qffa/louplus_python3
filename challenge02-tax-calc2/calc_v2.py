@@ -66,11 +66,11 @@ def salary_calc(base_salary):
 
 
 
-for i in range((len(sys.argv) - 1)):
+for value in sys.argv[1:]:
 
 	try:
-		emp_id = int(sys.argv[i + 1].split(":")[0])
-		emp_base_salary = int(sys.argv[i + 1].split(":")[1])
+		emp_id = int(value.split(":")[0])
+		emp_base_salary = int(value.split(":")[1])
 	except:
 		print("Parameter Error")
 		exit()
@@ -81,6 +81,6 @@ for i in range((len(sys.argv) - 1)):
 	
 	print("%d:%.2f" % (emp_id,salary_slip['net_salary']))
 
-	print(salary_slip)
+#	print(salary_slip)
 
 
