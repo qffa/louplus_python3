@@ -34,7 +34,7 @@ class UserData(object):
 
 
 	def calculator(self, rate):
-		
+		i = 0
 		for uid, basesalary in self.userdata.items():
 			if basesalary < rate['JiShuL']:
 				basevalue = rate['JiShuL']
@@ -43,11 +43,10 @@ class UserData(object):
 			else:
 				basevalue = basesalary
 
-			i = 0
 			self.salaryslip.append([])
 			self.salaryslip[i].append(uid)
 			self.salaryslip[i].append(basesalary)
-			self.salaryslip[i].append(basevalue * (1 - rate['YangLao'] - rate['YiLiao'] - rate['ShiYe'] -rate['GongShang'] - rate['ShengYu'] - rate['GongJiJin']))
+			self.salaryslip[i].append(basevalue * (rate['YangLao'] + rate['YiLiao'] + rate['ShiYe'] + rate['GongShang'] + rate['ShengYu'] + rate['GongJiJin']))
 			
 			salary_for_tax = basesalary - self.salaryslip[i][2] - 3500
 
@@ -98,7 +97,7 @@ class UserData(object):
 		with open(outputfile, 'w') as file:
 
 			for i in self.salaryslip:
-				file.write(str(i[0]) + ',' + str(i[1]) + ',' + str(i[2]) + ',' + str(i[3]) + ','  + '\n')
+				file.write(str(i[0]) + ',' + str(i[1]) + ',' + str(i[2]) + ',' + str(i[3]) + ',' + str(i[4]) + '\n')
 
 
 
@@ -129,9 +128,9 @@ if __name__ == '__main__':
 #	print (r)
 
 	userdata.calculator(rate.config)
-	print(userdata.salaryslip)
+#	print(userdata.salaryslip)
 
-#	userdata.dumptofile(outputfile)
+	userdata.dumptofile(outputfile)
 
 		
 
