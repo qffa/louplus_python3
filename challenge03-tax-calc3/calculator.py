@@ -50,9 +50,6 @@ def UserData(object):
 			
 			salary_for_tax = basesalary - salaryslip[i][2] - 3500
 
-
-
-
 			if salary_for_tax <= 0:
 				tax_rate = 0
 				tax_sub_value = 0
@@ -92,32 +89,43 @@ def UserData(object):
 
 			i += 1
 
+	
+
+
+	def dumptofile(self, outputfile):
+
+		with open(outputfile, 'w') as file:
+
+			for i in salaryslip:
+				file.write(i.[0] + ',' + i[1] + ',' + i[2] + ',' + i[3] + ',' + i[4]\n)
 
 
 
 
 
 
+if __name__ == '__main__':
+
+	args = sys.argv[1:]:
+
+	index = args.index('-c')
+	cfgfile = args[index + 1]
+			
+	index = args.index('-d')
+	userfile = args[index + 1]
+
+	index = args.index('-o')
+	outputfile = args[index + 1]
 
 
 
+	rate = Config(cfgfile)
+	userdata = UserData(userfile)
 
+	userdata.calculator()
+	userdata.dumptofile(outputfile)
 
-for value in sys.argv[1:]:
-
-	try:
-		emp_id = int(value.split(":")[0])
-		emp_base_salary = int(value.split(":")[1])
-	except:
-		print("Parameter Error")
-		exit()
 		
-#	print(emp_id, emp_base_salary)
-	
-	salary_slip = salary_calc(emp_base_salary)
-	
-	print("%d:%.2f" % (emp_id,salary_slip['net_salary']))
 
-#	print(salary_slip)
 
 
