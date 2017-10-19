@@ -10,15 +10,15 @@ class Config(object):
 
 		with open(configfile, 'r') as file:
 			for line in file:
-			item = strip(line.split('=')[0])
-			value = strip(line.split('=')[1])
-			config[item] = value
+				item = line.split('=')[0].strip()
+				value = float(line.split('=')[1].strip())
+				self.config[item] = value
 
 	def get_config(self, item):
 		
-		return config[item]
+		return self.config[item]
 
-def UserData(object):
+class UserData(object):
 
 	userdata = {}
 	salaryslip = []
@@ -27,28 +27,29 @@ def UserData(object):
 		
 		with open(userdatafile, 'r') as file:
 			for line in file:
-				uid = strip(line.split('=')[0])
-				basesalary = strip(line.split('=')[1])
+				uid = line.split(',')[0]
+				basesalary = float(line.split(',')[1])
 
-				userdata[uid] = basesalary
+				self.userdata[uid] = basesalary
 
 
 	def calculator(self, rate):
 		
-		for uid, basesalary in slef.userdata.items():
-			if basesalary < rate.JiShuL:
-				basevalue = rate.JishuL
-			elif basesalary > rate.JishuH:
-				basevalue = rate.JiShuH
+		for uid, basesalary in self.userdata.items():
+			if basesalary < rate['JiShuL']:
+				basevalue = rate['JiShuL']
+			elif basesalary > rate['JiShuH']:
+				basevalue = rate['JiShuH']
 			else:
 				basevalue = basesalary
 
 			i = 0
-			salaryslip[i][0] = uid
-			salaryslip[i][1] = basesalary
-			salaryslip[i][2] = basevalue * (1 - rate.YangLao - rate.YiLiao - rate.ShiYe -rate.GongShang - rate.ShengYu - rate.GongJiJin)
+			self.salaryslip.append([])
+			self.salaryslip[i].append(uid)
+			self.salaryslip[i].append(basesalary)
+			self.salaryslip[i].append(basevalue * (1 - rate['YangLao'] - rate['YiLiao'] - rate['ShiYe'] -rate['GongShang'] - rate['ShengYu'] - rate['GongJiJin']))
 			
-			salary_for_tax = basesalary - salaryslip[i][2] - 3500
+			salary_for_tax = basesalary - self.salaryslip[i][2] - 3500
 
 			if salary_for_tax <= 0:
 				tax_rate = 0
@@ -83,9 +84,9 @@ def UserData(object):
 				tax_sub_value = 13505
 
 
-			salaryslip[i][3] = salary_for_tax * tax_rate - tax_sub_value
+			self.salaryslip[i].append(salary_for_tax * tax_rate - tax_sub_value)
 
-			salaryslip[i][4] = salaryslip[i][1] - salaryslip[i][2] - salaryslip[i][3]
+			self.salaryslip[i].append(self.salaryslip[i][1] - self.salaryslip[i][2] - self.salaryslip[i][3])
 
 			i += 1
 
@@ -96,8 +97,8 @@ def UserData(object):
 
 		with open(outputfile, 'w') as file:
 
-			for i in salaryslip:
-				file.write(i.[0] + ',' + i[1] + ',' + i[2] + ',' + i[3] + ',' + i[4]\n)
+			for i in self.salaryslip:
+				file.write(str(i[0]) + ',' + str(i[1]) + ',' + str(i[2]) + ',' + str(i[3]) + ','  + '\n')
 
 
 
@@ -106,7 +107,7 @@ def UserData(object):
 
 if __name__ == '__main__':
 
-	args = sys.argv[1:]:
+	args = sys.argv[1:]
 
 	index = args.index('-c')
 	cfgfile = args[index + 1]
@@ -122,8 +123,15 @@ if __name__ == '__main__':
 	rate = Config(cfgfile)
 	userdata = UserData(userfile)
 
-	userdata.calculator()
-	userdata.dumptofile(outputfile)
+#	print(rate.config)
+	
+#	r = rate.get_config('JiShuL')
+#	print (r)
+
+	userdata.calculator(rate.config)
+	print(userdata.salaryslip)
+
+#	userdata.dumptofile(outputfile)
 
 		
 
