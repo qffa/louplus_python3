@@ -5,7 +5,7 @@ from multiprocessing import Process, Queue
 
 class Config(object):
 
-	config = {}
+	data = {}
 
 	def __init__(self, configfile):
 
@@ -13,41 +13,41 @@ class Config(object):
 			for line in file:
 				item = line.split('=')[0].strip()
 				value = float(line.split('=')[1].strip())
-				self.config[item] = value
+				self.data[item] = value
 
 	def get_config(self):
 		
-		return self.config
+		return self.data
 
 class UserData(object):
 
-	userdata = {}
+	baseinfo = {}
 	salaryslip = []
 
-	def __init__(self, userdatafile):
+	def __init__(self, baseinfofile):
 		
-		with open(userdatafile, 'r') as file:
+		with open(baseinfofile, 'r') as file:
 			for line in file:
 				uid = int(line.split(',')[0])
 				basesalary = float(line.split(',')[1])
 
-				self.userdata[uid] = basesalary
+				self.baseinfo[uid] = basesalary
 
 
-	def calculator(self, rate):
+	def calculator(self, config):
 		i = 0
-		for uid, basesalary in self.userdata.items():
-			if basesalary < rate['JiShuL']:
-				basevalue = rate['JiShuL']
-			elif basesalary > rate['JiShuH']:
-				basevalue = rate['JiShuH']
+		for uid, basesalary in self.baseinfo.items():
+			if basesalary < config['JiShuL']:
+				basevalue = config['JiShuL']
+			elif basesalary > config['JiShuH']:
+				basevalue = config['JiShuH']
 			else:
 				basevalue = basesalary
 
 			self.salaryslip.append([])
 			self.salaryslip[i].append(uid)
 			self.salaryslip[i].append(basesalary)
-			self.salaryslip[i].append(basevalue * (rate['YangLao'] + rate['YiLiao'] + rate['ShiYe'] + rate['GongShang'] + rate['ShengYu'] + rate['GongJiJin']))
+			self.salaryslip[i].append(basevalue * (config['YangLao'] + config['YiLiao'] + config['ShiYe'] + config['GongShang'] + config['ShengYu'] + config['GongJiJin']))
 			
 			salary_for_tax = basesalary - self.salaryslip[i][2] - 3500
 
@@ -110,22 +110,22 @@ q = Queue()
 def readdata(cfgfile):
 	
 
-	rate = Config(cfgfile)
+	config = Config(cfgfile)
 
-	q.put(rate.config)
+	q.put(config.data)
 	
 
-#	print (rate.get_config())
+#	print (config.get_config())
 
 
 
 def calculator(userfile):
 
-	rate = q.get()
+	config = q.get()
 
 	userdata = UserData(userfile)
 
-	userdata.calculator(rate)
+	userdata.calculator(config)
 
 	q.put(userdata.salaryslip)
 
