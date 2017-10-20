@@ -127,19 +127,19 @@ def calculator(userfile):
 
 	userdata.calculator(rate)
 
-	q.put(userdata.slaryslip)
-
-	print(rate)
-	print(userdata.salaryslip)
+	q.put(userdata.salaryslip)
 
 
-def dump(outputfile):
+
+def dump(userfile,outputfile):
 
 	data = q.get()
-	
+	userdata = UserData(userfile)
+
+	userdata.salaryslip = data
 	userdata.dumptofile(outputfile)
 
-
+#	print(userdata.salaryslip)
 
 
 
@@ -160,11 +160,11 @@ def main():
 
 
 
-	p1 = Process(target=readdata, args =(cfgfile, userfile))
+	p1 = Process(target=readdata, args =(cfgfile,))
 
-	p2 = Process(target=calculator)
+	p2 = Process(target=calculator, args = (userfile,))
 	
-	p3 = Process(target=dump, args=(outputfile,))
+	p3 = Process(target=dump, args=(userfile,outputfile,))
 
 
 	p1.start()
