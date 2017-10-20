@@ -24,9 +24,9 @@ class UserData(object):
 	baseinfo = {}
 	salaryslip = []
 
-	def __init__(self, baseinfofile):
+	def __init__(self, userfile):
 		
-		with open(baseinfofile, 'r') as file:
+		with open(userfile, 'r') as file:
 			for line in file:
 				uid = int(line.split(',')[0])
 				basesalary = float(line.split(',')[1])
