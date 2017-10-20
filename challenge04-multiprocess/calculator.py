@@ -103,40 +103,39 @@ class UserData(object):
 
 
 
+q = Queue()
 
-queue = Queue()
 
 
-def readdata(cfgfile, userfile):
+def readdata(cfgfile):
 	
 
 	rate = Config(cfgfile)
-	userdata = UserData(userfile)
 
-	queue.put(rate)
-	queue.put(userdata)
+	q.put(rate.config)
 	
 
 #	print (rate.get_config())
 
 
 
-def calculator():
+def calculator(userfile):
 
-	rate = queue.get()
-	userdata = queue.get()
+	rate = q.get()
 
-	userdata.calculator(rate.config)
+	userdata = UserData(userfile)
 
-	queue.put(userdata)
+	userdata.calculator(rate)
 
-	print(rate.config)
-	print(userdata.userdata)
+	q.put(userdata.slaryslip)
+
+	print(rate)
+	print(userdata.salaryslip)
 
 
 def dump(outputfile):
 
-	userdata = queue.get()
+	data = q.get()
 	
 	userdata.dumptofile(outputfile)
 
@@ -156,6 +155,7 @@ def main():
 
 	index = args.index('-o')
 	outputfile = args[index + 1]
+
 
 
 
