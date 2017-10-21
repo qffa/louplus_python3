@@ -15,7 +15,7 @@ class UserData(object):
 		with open(userfile, 'r') as file:
 			for line in file:
 				uid = int(line.split(',')[0])
-				basesalary = float(line.split(',')[1])
+				basesalary = int(line.split(',')[1])
 
 				self.baseinfo[uid] = basesalary
 
@@ -87,7 +87,7 @@ class UserData(object):
 		with open(outputfile, 'w') as file:
 
 			for i in self.salaryslip:
-				file.write(str(i[0]) + ',' + str(format(i[1],'.2f')) + ',' + str(format(i[2],'.2f')) + ',' + str(format(i[3],'.2f')) + ',' + str(format(i[4],'.2f')) + ',' + i[5] + '\n')
+				file.write(str(i[0]) + ',' + str(i[1]) + ',' + str(format(i[2],'.2f')) + ',' + str(format(i[3],'.2f')) + ',' + str(format(i[4],'.2f')) + ',' + i[5] + '\n')
 
 
 
@@ -108,7 +108,7 @@ def readcfg(cfgfile, cityname):
 	config.read(cfgfile)
 
 	for section in config.sections():
-		if section == cityname:
+		if section.lower() == cityname.lower():
 			section_data = config[section]
 		else:
 			section_data = config['DEFAULT']
