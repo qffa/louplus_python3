@@ -8,7 +8,7 @@ from datetime import datetime
 class UserData(object):
 
 	baseinfo = {}
-	salaryslip = []
+	salaryslip = []		#format: uid,base_salary,insurance,tax,net_salary,time
 
 	def __init__(self, userfile):
 		
@@ -142,10 +142,13 @@ def dump(userfile,outputfile):
 
 
 
+
+def usage():
+	print('Usage: calculator.py -C cityname -c configfile -d userdata -o resultdata')
+
+
 def main():
 
-	def usage():
-		print('Usage: calculator.py -C cityname -c configfile -d userdata -o resultdata')
 
 	try:
 		opts, args = getopt.getopt(sys.argv[1:], 'c:C:d:o:h', ['help'])
@@ -174,11 +177,8 @@ def main():
 
 
 
-
 	p1 = Process(target=readcfg, args =(cfgfile,cityname))
-
 	p2 = Process(target=calculator, args = (userfile,))
-	
 	p3 = Process(target=dump, args=(userfile,outputfile,))
 
 
