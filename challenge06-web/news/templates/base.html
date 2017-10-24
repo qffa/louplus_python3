@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="style.css">
+        <title>{% block title %}{% endblock %}</title>
+    </head>
+
+    <body>
+        <div>
+            {% block header %}
+                <p>this is header</>
+            {% endblock %}
+        </div>
+
+        <div>{% block content %}{% endblock %}</div>
+            
+
+        <div>
+            {% block footer %}
+                &Copy; copyright 2017 by <a href="http://www.shiyanlou.com/">shiyanlou</a>
+            {% endblock %}
+        </div>
+</html>
