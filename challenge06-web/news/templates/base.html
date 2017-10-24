@@ -3,7 +3,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href={{ url_for('static', filename="style.css") }}>
         <title>{% block title %}{% endblock %}</title>
     </head>
 
@@ -19,7 +19,9 @@
 
         <div>
             {% block footer %}
-                &Copy; copyright 2017 by <a href="http://www.shiyanlou.com/">shiyanlou</a>
+                <p class="footer">
+                    &Copy; copyright 2017 by <a href="http://www.shiyanlou.com/">shiyanlou</a>
+                </p>
             {% endblock %}
         </div>
 </html>

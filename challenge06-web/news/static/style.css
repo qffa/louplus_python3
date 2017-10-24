@@ -1,0 +1,16 @@
+ul{
+    list-style-type: none;
+    margin:20px;
+}
+
+.header{
+    color: red;
+    font-size: 40px;
+}
+
+.footer{
+    font-size: 12px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding-top: 20px;
+}
