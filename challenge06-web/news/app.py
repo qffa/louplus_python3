@@ -17,9 +17,9 @@ def index():
     filenames = os.listdir('../files')
 
     for filename in filenames:
-        filename = '../files/' + filename
-        if os.path.isfile(filename):
-            with open(filename, 'r') as f:
+        filepath = '../files/' + filename
+        if os.path.isfile(filepath):
+            with open(filepath, 'r') as f:
                 article = json.loads(f.read())
                 article_list.append(article['title'])
 
@@ -30,12 +30,15 @@ def index():
 
 @app.route('/files/<filename>')
 def file(filename):
-    pass
+    filepath = '../files/' + filename + '.json'
+    if os.path.isfile(filepath):
+        with open(filepath, 'r') as f:
+            article = json.loads(f.read())
 
+        return render_template('file.html', article = article)
 
-
-
-
+    else:
+        return render_template('404.html'), 404
 
 
 @app.errorhandler(404)
@@ -47,4 +50,4 @@ def not_found(error):
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(port = 3000)

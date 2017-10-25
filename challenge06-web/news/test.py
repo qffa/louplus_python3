@@ -13,3 +13,5 @@ for filename in filenames:
             post.append(json.loads(file.read()))
 
 print(post)
+
+print(os.path.isfile("a.c"))

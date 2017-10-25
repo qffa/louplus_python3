@@ -9,8 +9,12 @@ ul{
 }
 
 .footer{
-    font-size: 12px;
+    font-size: 14px;
     margin-top: 20px;
     margin-bottom: 20px;
     padding-top: 20px;
+}
+
+.time{
+    color: green;
 }
