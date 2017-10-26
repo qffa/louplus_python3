@@ -36,6 +36,7 @@ class Lab(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(64))
     course_id = Column(Integer, ForeignKey('course.id'))
+    course = relationship('Course', backref='labs')
 
     def __repr__(self):
         return "<Lab(name=%s)>" % self.name
