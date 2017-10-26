@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+
+{% block header %}
+    <h1 class="header">B system</h1>
+{% endblock %}
+
+
+{% block content %}
+    <ul>
+    {% for title in article_list %}
+        <li>{{ title }}</li>
+    {% endfor %}
+    </ul>   
+{% endblock %}
