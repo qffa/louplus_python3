@@ -60,7 +60,7 @@ class File(db.Model):
             mongodb.tag.insert_one({'file_id': self.id, 'title':self.title, 'tags':[tag_name]})
         else:
             tags= file_tags['tags']
-            tags = tags.append(tag_name)
+            tags.append(tag_name)
             tags = set(tags)
             mongodb.tag.update_one({'file_id': self.id},{'$set':{'tags': list(tags)}})
 
@@ -69,21 +69,29 @@ class File(db.Model):
 
 
     def remove_tag(self, tag_name):
+        file_tags = mongodb.tag.find_one({'file_id': self.id})
+        tags= file_tags['tags']
+        try:
+            tags.remove(tag_name)
+        except ValueError:
+            return "tag not exist"
+
+        mongodb.tag.update_one({'file_id': self.id},{'$set':{'tags': tags}})
+        
 
 
-
-        pass
 
 
 
 
     @property
     def tags(self):
+        file_tags = mongodb.tag.find_one({'file_id': self.id})
+        return file_tags['tags']
 
 
 
 
-        pass
 
 
 
@@ -112,21 +120,31 @@ db.session.add(file2)
 db.session.commit()
 
 
+file1.add_tag('tech')
+file1.add_tag('Java')
+file1.add_tag('linux')
+file2.add_tag('tech')
+file2.add_tag('Python')
 
 
-file1.add_tag("Java")
 
+article_list = db.session.query(File.id, File.title).all()
+
+print(article_list)
 
 
 
 @app.route('/')
 def index():
     article_list = db.session.query(File.id, File.title).all()
+    l =[]
+    for article in article_list:
+        article = list(article)
+        f = File.query.get(article[0])
+        article.append(f.tags)
+        l.append(article)
 
-#    for article in article_list:
-#        id, title = article[:]
-
-
+    article_list = l
 
 
     return render_template("index.html", article_list = article_list)
@@ -150,9 +168,8 @@ def not_found(error):
 
 
 
-"""
 
 if __name__ == '__main__':
     app.run()
 
-"""
+

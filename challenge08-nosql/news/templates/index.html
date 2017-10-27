@@ -14,6 +14,7 @@
     <ul>
     {% for article in article_list %}
     <li><a href = "files/{{ article[0]}}">{{ article[1] }}</a></li>
+    <li>{{ article[2] }}</li>
     {% endfor %}
     </ul>   
 {% endblock %}
