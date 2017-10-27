@@ -40,14 +40,14 @@ class File(db.Model):
     def __init__(self, title, time, category, content):
         self.title = title
         self.created_time = time
-        self.categorg = category
+        self.category = category
         self.content = content
 
 
     def __repr__(self):
         return '<File(title=%s)>' %self.title
 
-
+db.drop_all()
 db.create_all()
 
 
