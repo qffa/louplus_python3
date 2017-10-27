@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
-{% block title %}{{ article["title"] }}{% endblock %}
+{% block title %}{{ file.title }}{% endblock %}
 
 {% block header %}
-    <h1>{{ article["title"] }}</h1>
+    <h1>{{ file.title }}</h1>
 {% endblock %}
 
 
 {% block content %}
-    <p class="time">{{ article["created_time"] }}</p>
-    <p class="content">{{ article["content"] }}</p>
+    <p class="time">{{ file.created_date }}</p>
+    <p class="content">{{ file.content }}</p>
 {% endblock %}

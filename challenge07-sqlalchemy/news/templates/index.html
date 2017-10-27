@@ -12,8 +12,8 @@
 
 {% block content %}
     <ul>
-    {% for title in article_list %}
-        <li>{{ title }}</li>
+    {% for article in article_list %}
+    <li><a href = "files/{{ article[0]}}">{{ article[1] }}</a></li>
     {% endfor %}
     </ul>   
 {% endblock %}

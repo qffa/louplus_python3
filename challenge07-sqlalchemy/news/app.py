@@ -66,35 +66,37 @@ db.session.commit()
 
 
 
+print(db.session.query(File.id, File.title).all())
+
+
+
+
+
+
 
 @app.route('/')
 def index():
-    article_list = []
-    filenames = os.listdir('../files')
+    article_list = db.session.query(File.id, File.title).all()
 
-    for filename in filenames:
-        filepath = '../files/' + filename
-        if os.path.isfile(filepath):
-            with open(filepath, 'r') as f:
-                article = json.loads(f.read())
-                article_list.append(article['title'])
+#    for article in article_list:
+#        id, title = article[:]
+
+
 
 
     return render_template("index.html", article_list = article_list)
 
 
 
-@app.route('/files/<filename>')
-def file(filename):
-    filepath = '../files/' + filename + '.json'
-    if os.path.isfile(filepath):
-        with open(filepath, 'r') as f:
-            article = json.loads(f.read())
 
-        return render_template('file.html', article = article)
+@app.route('/files/<fileid>')
 
-    else:
-        return render_template('404.html'), 404
+
+def file(fileid):
+    file = File.query.get_or_404(1)
+
+    return render_template('file.html', file = file)
+
 
 
 @app.errorhandler(404)
@@ -103,10 +105,9 @@ def not_found(error):
 
 
 
-'''
+
 
 if __name__ == '__main__':
     app.run()
 
 
-'''
