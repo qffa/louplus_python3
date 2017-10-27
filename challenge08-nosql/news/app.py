@@ -128,9 +128,6 @@ file2.add_tag('Python')
 
 
 
-article_list = db.session.query(File.id, File.title).all()
-
-print(article_list)
 
 
 
