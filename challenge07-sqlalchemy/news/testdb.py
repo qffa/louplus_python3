@@ -69,9 +69,9 @@ db.session.add(p2)
 db.session.commit()
 
 
-print(db.session.query(Post.title).all())
+#print(db.session.query(Post.title).all())
 
+#print(db.session.query(Post).filter(Post.id == 1).first())
 p = db.session.query(Post).join(Category, Post.category_id == Category.id).first()
 
-
-print(dir(p))
+print(p.category.name)

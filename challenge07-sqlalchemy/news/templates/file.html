@@ -10,4 +10,5 @@
 {% block content %}
     <p class="time">{{ file.created_date }}</p>
     <p class="content">{{ file.content }}</p>
+    <p class="category">category: {{ file.category.name }}</p>
 {% endblock %}
