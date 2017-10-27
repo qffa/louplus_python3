@@ -93,7 +93,7 @@ def index():
 
 
 def file(fileid):
-    file = File.query.get_or_404(1)
+    file = File.query.get_or_404(fileid)
 
     return render_template('file.html', file = file)
 
