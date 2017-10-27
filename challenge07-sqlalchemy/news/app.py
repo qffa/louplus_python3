@@ -66,8 +66,6 @@ db.session.commit()
 
 
 
-print(db.session.query(File.id, File.title).all())
-
 
 
 

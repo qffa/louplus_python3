@@ -33,6 +33,11 @@ class Post(db.Model):
             pub_date = datetime.utcnow()
         self.pub_date = pub_date
 
+    def __repr__(self):
+        return "<Post(title='%s')>" %self.title
+
+
+
 
 
 class Category(db.Model):
@@ -46,13 +51,27 @@ class Category(db.Model):
         return "<Category(name=%s)>" %self.name
 
 
+
+db.drop_all()
 db.create_all()
 
 
 py = Category("Python")
-p = Post("hello python", "Python is cool!", py)
-
+ja = Category("Java")
+p1 = Post("hello python", "Python is cool!", py)
+p2 = Post("hello Java", "Java is cool!", ja)
 db.session.add(py)
-db.session.add(p)
+db.session.add(ja)
+db.session.add(p1)
+db.session.add(p2)
+
 
 db.session.commit()
+
+
+print(db.session.query(Post.title).all())
+
+p = db.session.query(Post).join(Category, Post.category_id == Category.id).first()
+
+
+print(dir(p))
