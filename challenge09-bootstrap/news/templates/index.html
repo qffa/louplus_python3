@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+
+{% block header %}
+    <h1 class="header">B system</h1>
+{% endblock %}
+
+
+{% block content %}
+    <ul>
+    {% for article in article_list %}
+    <li><a href = "files/{{ article[0]}}">{{ article[1] }}</a></li>
+    <li>{{ article[2] }}</li>
+    {% endfor %}
+    </ul>   
+{% endblock %}
