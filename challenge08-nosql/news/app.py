@@ -1,6 +1,22 @@
 #!/usr/bin/env python3
 # -*- coding:utf-8 -*-
 
+
+'''
+preparation:
+
+install py package:
+sudo pip3 install mysqlclient
+sudo pip3 install Flask_SQLAlchemy
+sudo pip3 install pymongo
+
+create db:
+create db:shiyanlou in mysql
+create collection:shyanlou in mongoDB
+
+'''
+
+
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
@@ -67,7 +83,6 @@ class File(db.Model):
 
 
 
-
     def remove_tag(self, tag_name):
         file_tags = mongodb.tag.find_one({'file_id': self.id})
         tags= file_tags['tags']
@@ -81,9 +96,6 @@ class File(db.Model):
 
 
 
-
-
-
     @property
     def tags(self):
         file_tags = mongodb.tag.find_one({'file_id': self.id})
@@ -93,55 +105,53 @@ class File(db.Model):
 
 
 
+class dbinit(object):
+
+    def create(self):
+        db.create_all()
+
+    def insertdata(self):
+        java = Category('Java')
+        python = Category('Python')
+
+        file1 = File('Hello Java', datetime.utcnow(), java, 'File Content - Java is cool!')
+        file2 = File('Hello Python', datetime.utcnow(), python, 'File Content - Python is cool!')
+
+        db.session.add(java)
+        db.session.add(python)
+        db.session.add(file1)
+        db.session.add(file2)
+
+        db.session.commit()
+
+
+        file1.add_tag('tech')
+        file1.add_tag('Java')
+        file1.add_tag('linux')
+        file2.add_tag('tech')
+        file2.add_tag('Python')
+
+
+    def drop(self):
+        db.drop_all()
 
 
 
-
-
-
-
-db.drop_all()
-db.create_all()
-
-
-java = Category('Java')
-python = Category('Python')
-
-file1 = File('Hello Java', datetime.utcnow(), java, 'File Content - Java is cool!')
-file2 = File('Hello Python', datetime.utcnow(), python, 'File Content - Python is cool!')
-
-
-
-db.session.add(java)
-db.session.add(python)
-db.session.add(file1)
-db.session.add(file2)
-
-db.session.commit()
-
-
-file1.add_tag('tech')
-file1.add_tag('Java')
-file1.add_tag('linux')
-file2.add_tag('tech')
-file2.add_tag('Python')
-
-
-
+database = dbinit()
 
 
 
 @app.route('/')
 def index():
     article_list = db.session.query(File.id, File.title).all()
-    l =[]
+    al =[]
     for article in article_list:
         article = list(article)
-        f = File.query.get(article[0])
-        article.append(f.tags)
-        l.append(article)
+        file = File.query.get(article[0])
+        article.append(file.tags)
+        al.append(article)
 
-    article_list = l
+    article_list = al
 
 
     return render_template("index.html", article_list = article_list)
@@ -167,6 +177,9 @@ def not_found(error):
 
 
 if __name__ == '__main__':
+    database.drop()
+    database.create()
+    database.insertdata()
     app.run()
 
 
