@@ -11,10 +11,16 @@ from shiyanlou.models import Course, engine
 
 
 class ShiyanlouPipeline(object):
-    def process_item(self, item, spider):
 
+
+
+    def process_item(self, item, spider):
         item['students'] = int(item['students'])
-        self.session.add(Course(**item))
+
+        if item['students'] < 1000:
+            raise DropItem('Couuse students less than 1000.')
+        else:
+            self.session.add(Course(**item))
 
         return item
 
@@ -23,7 +29,10 @@ class ShiyanlouPipeline(object):
         Session = sessionmaker(bind=engine)
         self.session = Session()
 
-    def close_spider(self,spider):
+
+    def close_spider(self, spider):
         self.session.commit()
         self.session.close()
+
+
 
