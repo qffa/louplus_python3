@@ -24,5 +24,20 @@ class RepositorySpider(scrapy.Spider):
                 'name': repository.css('h3 a::text').re_first('[\s]*(.*)'),
                 'update_time': repository.css('relative-time::attr(datetime)').extract_first()
                 })
+            repository_url = response.urljoin(response.css('h3 a::attr(href)').extract_first())
+            request = scrapy.Request(repository_url, callback = self.parse_repo)
+            request.meta['item'] = item
 
-            yield item
+            yield request
+
+
+    def parse_repo(self, response):
+
+        item = response.meta['item']
+        numbers = response.css('ul.numbers-summary li a span::text').re('[^\d]*([\d*])')
+
+        item['commits'] = int(numbers[0])
+        item['branches'] = int(numbers[1])
+        item['releases'] = int(numbers[2])
+
+        yield item
