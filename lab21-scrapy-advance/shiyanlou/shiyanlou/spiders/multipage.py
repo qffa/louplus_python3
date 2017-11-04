@@ -17,7 +17,8 @@ class MultipageSpider(scrapy.Spider):
 
             course_url = response.urljoin(course.xpath('@href').extract_first())
 
-            request = scrapy.Request(course_url, callback = self.parse_author)equest.meta['item'] = item
+            request = scrapy.Request(course_url, callback = self.parse_author)
+            request.meta['item'] = item
 
             yield request
 
