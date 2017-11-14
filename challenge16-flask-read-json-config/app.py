@@ -17,10 +17,15 @@ def create_app():
 
     with open(file, 'r') as f:
         for line in f.readlines():
-            if line[0] != '#':
-                jsonstring += line
+            if line.strip() != '':
+                if line.strip()[0] != '#':
+                    jsonstring += line
 
-    config = json.loads(jsonstring)
+    config = {}
+
+    for key, value in json.loads(jsonstring).items():
+        config[key.upper()] = value
+
 
     app.config.update(config)
 

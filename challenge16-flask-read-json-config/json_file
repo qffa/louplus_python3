@@ -1,6 +1,7 @@
 #comments
 {
-#comments
-    "SQLALCHEMY_URI": "sqlite:///"
+    #comments
+    "SQLALCHEMY_URI": "sqlite:///",
+    "flask_test": "upper"
 }
 
