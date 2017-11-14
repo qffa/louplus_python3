@@ -1,8 +1,5 @@
-""" rmon.app
 
-该模块主要实现了app创建函数
-
-"""
+#该模块主要实现了app创建函数
 
 import os
 from flask import Flask
@@ -12,9 +9,8 @@ from rmon.config import DevConfig, ProductConfig
 
 
 def create_app():
-    """ 创建并初始化Flask app
+#    创建并初始化Flask app
 
-    """
 
     app = Flask('rmon')
 

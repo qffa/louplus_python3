@@ -1,8 +1,6 @@
-""" rmon.models
 
-该模块实现了所有的model类以及相应的序列化类
+#该模块实现了所有的model类以及相应的序列化类
 
-"""
 
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
@@ -10,14 +8,13 @@ from datetime import datetime
 db = SQLAlchemy()
 
 class Server(db.Model):
-    """ Redies服务器模型
+    #Redies服务器模型
 
-    """
 
 
     __tablename__ = 'redis_server'
-    id = db.Column(db.Interger, primary_key=True)
-    name = db.Column(db.String(64), unqiue=True)
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(64), unique=True)
     description = db.Column(db.String(512))
     host = db.Column(db.String(15))
     port = db.Column(db.Integer, default=6379)

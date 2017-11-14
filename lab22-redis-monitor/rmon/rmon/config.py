@@ -7,7 +7,7 @@ rmon 配置文件
 
 import os
 
-class DveConfig:
+class DevConfig:
     """ 开发环境配置
 
     """
