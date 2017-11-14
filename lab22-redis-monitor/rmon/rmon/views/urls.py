@@ -1,5 +1,8 @@
-#定义了所有APT对应的URL
+""" rmon.views.urls
 
+瀹氫箟浜嗘墍鏈堿PT瀵瑰簲鐨刄RL
+
+"""
 
 from flask import Blueprint
 from rmon.views.index import IndexView

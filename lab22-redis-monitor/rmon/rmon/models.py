@@ -1,6 +1,7 @@
+""" rmon.model
 
-#¸ÃÄ£¿éÊµÏÖÁËËùÓĞµÄmodelÀàÒÔ¼°ÏàÓ¦µÄĞòÁĞ»¯Àà
-
+è¯¥æ¨¡å—å®ç°äº†æ‰€æœ‰çš„modelç±»ä»¥åŠç›¸åº”çš„åºåˆ—åŒ–ç±»
+"""
 
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
@@ -8,8 +9,9 @@ from datetime import datetime
 db = SQLAlchemy()
 
 class Server(db.Model):
-    #Redies·şÎñÆ÷Ä£ĞÍ
-
+    """
+    RediesæœåŠ¡å™¨æ¨¡å‹
+    """
 
 
     __tablename__ = 'redis_server'

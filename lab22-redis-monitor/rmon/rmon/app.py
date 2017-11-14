@@ -1,5 +1,7 @@
+""" rmon.app
 
-#¸ÃÄ£¿éÖ÷ÒªÊµÏÖÁËapp´´½¨º¯Êı
+è¯¥æ¨¡å—ä¸»è¦å®ç°äº†appåˆ›å»ºå‡½æ•°
+"""
 
 import os
 from flask import Flask
@@ -9,28 +11,29 @@ from rmon.config import DevConfig, ProductConfig
 
 
 def create_app():
-#    ´´½¨²¢³õÊ¼»¯Flask app
+    """    åˆ›å»ºå¹¶åˆå§‹åŒ–Flask app
 
+    """
 
     app = Flask('rmon')
 
-    #¸ù¾İ»·¾³±äÁ¿¼ÓÔØ¿ª·¢»·¾³»òÕßÉú²ú»·¾³ÅäÖÃ
+    #æ ¹æ®ç¯å¢ƒå˜é‡åŠ è½½å¼€å‘ç¯å¢ƒæˆ–è€…ç”Ÿäº§ç¯å¢ƒé…ç½®
     env = os.environ.get('RMON_ENV')
     if env in ('pro', 'prod', 'product'):
         app.config.from_object(ProductConifg)
     else:
         app.config.from_object(DevConfig)
 
-    #´Ó»·¾³±äÁ¿RMON_SETTINGSÖ¸¶¨µÄÎÄ¼şÖĞ¼ÓÔØÅäÖÃ
+    #ä»ç¯å¢ƒå˜é‡RMON_SETTINGSæŒ‡å®šçš„æ–‡ä»¶ä¸­åŠ è½½é…ç½®
     app.config.from_envvar('RMON_SETTINGS', silent=True)
     app.config['SQLALCHEMY_TRACK_MODIFICATIOINS'] = False
 
 
-    #×¢²á Blueprint
+    #æ³¨å†Œ Blueprint
     app.register_blueprint(api)
-    #³õÊ¼»¯Êı¾İ¿â
+    #åˆå§‹åŒ–æ•°æ®åº“
     db.init_app(app)
-    #Èç¹ûÊÇ¿ª·¢»·¾³Ôò´´½¨ËùÓĞÊı¾İ¿â±í
+    #å¦‚æœæ˜¯å¼€å‘ç¯å¢ƒåˆ™åˆ›å»ºæ‰€æœ‰æ•°æ®åº“è¡¨
     if app.debug:
         with app.app_context():
             db.create_all()

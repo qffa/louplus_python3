@@ -1,5 +1,8 @@
+""" rmon.views.index
 
-#��ҳ��ͼ
+首页视图
+
+"""
 
 
 from flask import render_template
@@ -7,12 +10,15 @@ from flask.views import MethodView
 
 
 class IndexView(MethodView):
-    #��ҳ��ͼ
 
+    """首页视图
+
+    """
 
     def get(self):
-        #��Ⱦģ��
+        """渲染模板
 
+        """
         return render_template('index.html')
 
 
