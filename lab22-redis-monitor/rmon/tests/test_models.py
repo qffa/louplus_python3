@@ -26,3 +26,24 @@ class TestServer:
         server.delete()
 
         assert Server.query.count() == 0
+
+
+    def test_ping_sucess(self, db, server):
+        """测试Server.ping方法执行成功
+
+        需要保证Redis服务器监听在127.0.01:6379地址
+
+        """
+
+
+        assert server.ping() is True
+
+
+    def test_ping_failed(self, db):
+        """测试Server.ping方法执行失败
+
+        Server.ping 方法执行失败时，抛出RestException异常
+
+        """
+
+
