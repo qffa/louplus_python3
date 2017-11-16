@@ -1,5 +1,5 @@
 from rmon.models import Server
-
+from rmon.common.rest import RestException
 
 class TestServer:
     """测试Server相关功能
@@ -46,4 +46,10 @@ class TestServer:
 
         """
 
+        server = Server(name='test', host='127.0.0.1', port=6399)
 
+        try:
+            server.ping()
+        except RestException as e:
+            assert e.code == 400
+            assert e.message == 'redis server %s can not connected' %server.host
