@@ -25,8 +25,8 @@ class Server(db.Model):
     host = db.Column(db.String(15))
     port = db.Column(db.Integer, default=6379)
     password = db.Column(db.String())
-    update_at = db.Column(db.DateTime, default=datetime.utcnow)
-    create_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
 
     def __repr__(self):
@@ -82,7 +82,7 @@ class ServerSchema(Schema):
 
     """
 
-    id = fields.Integer(dump_only=Trur)
+    id = fields.Integer(dump_only=True)
     name = fields.String(required=True, validate=validate.Length(2,64))
     description = fields.String(validate=validate.Length(0,512))
     host = fields.String(required=True, validate=validate.Regexp(r'^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$'))
@@ -102,7 +102,7 @@ class ServerSchema(Schema):
         instance = self.context.get('instance', None)
         server = Server.query.filter_by(name=data['name']).first()
 
-        if server is None;
+        if server is None:
             return
 
         if instance is not None and server != instance:
