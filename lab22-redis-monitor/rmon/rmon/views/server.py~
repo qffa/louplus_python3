@@ -21,7 +21,7 @@ class ServerList(RestView):
         server, errors = ServerSchema().load(data)
 
         if errors:
-            return errors, 400
+            return error, 400
 
         server.ping()
         server.save()

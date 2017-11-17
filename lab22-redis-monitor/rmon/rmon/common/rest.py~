@@ -66,7 +66,7 @@ class RestView(MethodView):
 
         #HTTP请求方法定义了不同的装饰器类
         if isinstance(self.method_decorators, Mapping):
-            decorators = self.method_decorators.get(request.method.lower(), [])
+            decorators = self..method_decorators.get(request.method.lower(), [])
         else:
             decorators = self.method_decorators
 

@@ -1,6 +1,6 @@
 """ rmon.views.urls
 
-定义了所有API对应的URL
+定义了所有APT对应的URL
 
 """
 
