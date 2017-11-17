@@ -117,9 +117,11 @@ class ServerSchema(Schema):
 
         instance = self.context.get('instance', None)
 
+        #创建Redis服务器
         if instance is None:
             return Server(**data)
 
+        #更新服务器
         for key in data:
             setattr(instance, key ,data[key])
 
