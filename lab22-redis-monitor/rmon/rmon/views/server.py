@@ -1,11 +1,11 @@
 from flask import request, g
 
-from rmon.common.rest import ReswView
+from rmon.common.rest import RestView
 from rmon.models import Server, ServerSchema
 
 
 class ServerList(RestView):
-    """»ñÈ¡RedisÁĞ±í
+    """è·å–Redisåˆ—è¡¨
 
     """
 
@@ -14,7 +14,7 @@ class ServerList(RestView):
         return ServerSchema().dump(servers, many=True).data
 
     def post(self):
-        """´´½¨Redis·şÎñÆ÷
+        """åˆ›å»ºRedisæœåŠ¡å™¨
 
         """
         data = request.get_json()

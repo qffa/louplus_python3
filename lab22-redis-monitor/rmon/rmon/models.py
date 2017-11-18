@@ -105,7 +105,12 @@ class ServerSchema(Schema):
         if server is None:
             return
 
+        #更新服务器时
         if instance is not None and server != instance:
+            raise ValidationError('Redis server already exist', 'name')
+
+        #创建服务器时
+        if instance is None and server:
             raise ValidationError('Redis server already exist', 'name')
 
 

@@ -5,7 +5,7 @@
 from collections import Mapping
 from flask import request, make_response
 from flask.json import dumps
-from flask.view import MethodView
+from flask.views import MethodView
 
 
 class RestException(Exception):
