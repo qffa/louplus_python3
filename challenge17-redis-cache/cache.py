@@ -1,5 +1,6 @@
 import redis
 import json
+from functools import wraps
 
 
 class RedisCache:
@@ -8,16 +9,18 @@ class RedisCache:
 
     def cache(self, timeout=0):
         def deco(func):
+            @wraps(func)
             def wrapper(*args, **kwargs):
-                skwargs = sorted(kwargs.items())
-                key = (args, skwargs)
+#                skwargs = sorted(kwargs.items())
+                key = func.__name__
+                print('function name of func %s' % func.__name__)
+                print('key: %s' %key)
                 if self._redis.exists(key):
                     data = self._redis.get(key)
                     print('from cache')
                     return json.loads(data.decode())
                 else:
                     data = func(*args, **kwargs)
-                    assert isinstance(data, dict), "%s doesn't return dictiionary" %func
                     jdata = json.dumps(data)
                     self._redis.set(key, jdata)
                     self._redis.expire(key, timeout)
@@ -36,10 +39,11 @@ cache = RedisCache(r)
 def execute(n, a, b, c):
     
     return {'n': n, 'n2': n * 2}
-#    return 0
+
 
 
 if __name__ == '__main__':
+    print('function name of execute %s ' % execute.__name__)
     print(execute('10', a = 1, b = 2, c = 3))
 
 
