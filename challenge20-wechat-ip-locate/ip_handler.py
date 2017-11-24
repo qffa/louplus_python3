@@ -14,10 +14,9 @@ class CommandHandler:
 
         """
 #        if not isinstance(message, TextMessage):
- #           return False
+#           return False
 
         if not message.content.strip().lower().startswith(self.command):
-            print(message.content)
             return False
 
         return True
@@ -30,10 +29,11 @@ class IPLocationHandler(CommandHandler):
         if not self.check_match(message):
             return
 
-        ip = re.match('\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}', message.content)
+        ip = re.search('\s\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}$', message.content)
+        print(ip)
 
         if ip is None:
-            return
+            return create_reply('IP地址无效', message)
 
         q = QQwry()
         q.load_file('qqwry.dat')
@@ -43,7 +43,7 @@ class IPLocationHandler(CommandHandler):
         reply = create_reply(content[0], message)
 
 
-        return reply
+        return reply.render()
 
 
 if __name__ == "__main__":
@@ -52,7 +52,7 @@ if __name__ == "__main__":
         content = ''
 
     message  = Message()
-    message.content = 'ip 8.8.8.8'
+    message.content = 'ip 8.8.8.8.8'
 
     ip_locater = IPLocationHandler()
     print(message.content)
