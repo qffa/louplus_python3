@@ -7,16 +7,17 @@ from qqwry import QQwry
 
 
 class CommandHandler:
-    command = ''
+    command = 'ip'
 
     def check_match(self, message):
         """检查消息是否匹配命令模式
 
         """
-        if not isinstance(message, TextMessage):
-            return False
+#        if not isinstance(message, TextMessage):
+ #           return False
 
-        if not message.contnet.strip().lower().startwith(self.command):
+        if not message.content.strip().lower().startswith(self.command):
+            print(message.content)
             return False
 
         return True
@@ -24,18 +25,37 @@ class CommandHandler:
 
 
 class IPLocationHandler(CommandHandler):
+
     def handle(self, message):
-        ip = re.search('\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}', message.content).group(0)
+        if not self.check_match(message):
+            return
+
+        ip = re.match('\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}', message.content)
+
+        if ip is None:
+            return
 
         q = QQwry()
         q.load_file('qqwry.dat')
 
-        content = q.lookup(ip)
+        content = q.lookup(ip.group(0))
 
-        reply = create_reply(content, message)
-
-
-
+        reply = create_reply(content[0], message)
 
 
         return reply
+
+
+if __name__ == "__main__":
+
+    class Message():
+        content = ''
+
+    message  = Message()
+    message.content = 'ip 8.8.8.8'
+
+    ip_locater = IPLocationHandler()
+    print(message.content)
+    content = ip_locater.handle(message)
+    
+    print(content)
