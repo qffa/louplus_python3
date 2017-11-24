@@ -13,8 +13,8 @@ class CommandHandler:
         """检查消息是否匹配命令模式
 
         """
-#        if not isinstance(message, TextMessage):
-#           return False
+        if not isinstance(message, TextMessage):
+           return False
 
         if not message.content.strip().lower().startswith(self.command):
             return False
@@ -29,7 +29,12 @@ class IPLocationHandler(CommandHandler):
         if not self.check_match(message):
             return
 
-        ip = re.search('\s\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}$', message.content)
+        parts = message.content.lower().split()
+
+        if len(parts) == 1 or len(parts) > 2:
+            return create_reply('IP地址无效', message)
+
+        ip = re.match('^\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}$', parts[1])
         print(ip)
 
         if ip is None:
@@ -42,8 +47,7 @@ class IPLocationHandler(CommandHandler):
 
         reply = create_reply(content[0], message)
 
-
-        return reply.render()
+        return reply
 
 
 if __name__ == "__main__":
