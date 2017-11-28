@@ -1,17 +1,11 @@
 from datetime import datetime
-from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 
 
 
-app = Flask(__name__)
-db = SQLAlchemy(app)
+db = SQLAlchemy()
 
 
-app.config.update(dict(
-    SECRET_KEY = 'very secret key',
-    SQLALCHEMY_DATABASE_URI = 'mysql+mysqldb://root@localhost:3306/simpledu?charset=utf8'
-    ))
 
 
 class User(db.Model):
@@ -33,28 +27,6 @@ class Course(db.Model):
     author = db.relationship('User', uselist=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate = datetime.utcnow)
-
-
-@app.route('/')
-def index():
-    courses = Course.query.all()
-    return render_template('index.html', courses=courses)
-
-
-
-@app.route('/admin')
-def admin_index():
-    return 'admin'
-
-
-
-if __name__ == '__main__':
-    app.run()
-
-
-
-
-
 
 
 
