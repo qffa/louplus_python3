@@ -4,7 +4,7 @@ from simpledu.models import db, Course
 
 
 def create_app(config):
-    """ 可以根据传入的config名称，加载不同配置
+    """ APP 工厂
 
     """
 
@@ -13,22 +13,22 @@ def create_app(config):
 
     db.init_app(app)
 
-    
-    @app.route('/')
-    def index():
-        courses = Course.query.all()
-        return render_template('index.html', courses=courses)
-
-
-    @app.route('/admin')
-    def admin_index():
-        return 'admin'
-
-
+    register_blueprint(app)
 
     return app
 
 
+
+
+
+def register_blueprint(app):
+    from .handlers import front, course, admin
+
+    app.register_blueprint(front)
+    app.register_blueprint(course)
+    app.register_blueprint(admin)
+
+    
 
 
 
