@@ -5,3 +5,5 @@ mysqlclient
 flask-migrate
 flask-wtf
 flask-login
+scrapy
+faker
