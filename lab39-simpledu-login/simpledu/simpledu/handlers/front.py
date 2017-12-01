@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, flash, redirect, url_for
 from simpledu.models import Course, User
 from simpledu.forms import LoginForm, RegisterForm
-from flask_login import login_user
+from flask_login import login_user, logout_user, login_required
 
 
 
@@ -15,6 +15,8 @@ def index():
     return render_template('index.html', courses=courses)
 
 
+
+
 @front.route('/login', methods = ['GET', 'POST'])
 def login():
     form = LoginForm()
@@ -24,6 +26,16 @@ def login():
         return redirect(url_for('.index'))
 
     return render_template('login.html', form = form)
+
+
+
+@front.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    flash('您已经退出登录', 'success')
+
+    return redirect(url_for('.index'))
 
 
 
