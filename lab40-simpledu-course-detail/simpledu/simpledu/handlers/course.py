@@ -1,7 +1,10 @@
-from flask import Blueprint
+from flask import Blueprint, render_template
+from simpledu.models import Course
+
+
+
 
 course = Blueprint('course', __name__, url_prefix='/courses')
-
 
 
 @course.route('/<int:course_id>')
