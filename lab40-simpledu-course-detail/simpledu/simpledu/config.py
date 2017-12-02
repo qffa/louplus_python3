@@ -1,6 +1,7 @@
 class BaseConfig(object):
     """ 配置基类 """
-    SECRET_KEY = '! very secret !'
+    SECRET_KEY = '! very secret !',
+    INDEX_PER_PAGE = 9
 
 
 

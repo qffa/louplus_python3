@@ -1,14 +1,19 @@
 {% extends "base.html" %}
+{% from "macros.html" import render_pagination %}
 
 
 {% block title %}Home{% endblock  %}
 
+
+
+
 {% block body %}
+
 
 <div class="row">
 
 
-    {% for course in courses %}
+    {% for course in pagination.items %}
     <div class="col-sm-6 col-md-4 course">
 
         <div class="thumbnail">
@@ -20,7 +25,6 @@
 
                 </div>
 
-
             </a>
 
         </div>
@@ -31,6 +35,11 @@
 
 
 </div>
+
+
+
+{{ render_pagination(pagination, 'front.index') }}
+
 
 
 
