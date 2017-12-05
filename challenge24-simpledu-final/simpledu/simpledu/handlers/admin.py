@@ -113,10 +113,17 @@ def create_user():
 def edit_user(user_id):
     user = User.query.get_or_404(user_id)
     form = UserForm(obj=user)
-    if form.validate_on_submit():
-        form.update_user(user)
-        flash('用户更新成功', 'success')
-        return redirect(url_for('admin/users'))
+    if form.is_submitted():
+        form.populate_obj(user)
+        db.session.add(user)
+        try:
+            db.session.commit()
+        except:
+            db.session.rollback()
+            flash('用户名或邮箱已存在', 'error')
+        else:
+            flash('用户更新成功', 'success')
+            return redirect(url_for('admin.users'))
 
     return render_template('admin/edit_user.html', form=form, user=user)
 
