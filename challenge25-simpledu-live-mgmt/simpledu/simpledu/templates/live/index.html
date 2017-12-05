@@ -16,7 +16,7 @@
                 <tr>
                     <th>ID</th>
                     <th>直播名称</th>
-                    <th>用户ID</th>
+                    <th>用户</th>
                 </tr>
             </thead>
             <tbody>
@@ -24,7 +24,7 @@
                 <tr>
                     <td>{{ live.id }}</td>
                     <td>{{ live.name }}</td>
-                    <td>{{ live.user_id }}</td>
+                    <td>{{ live.user.username }}</td>
                 </tr>
             {% endfor %}
             </tbody>
