@@ -1,0 +1,12 @@
+flask
+flask-bootstrap
+flask-sqlalchemy
+mysqlclient
+flask-migrate
+flask-wtf
+flask-login
+scrapy
+faker
+flask-sockets
+gunicorn
+redis
