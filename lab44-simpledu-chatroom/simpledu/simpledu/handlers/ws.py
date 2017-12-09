@@ -26,21 +26,21 @@ class Chatroom(object):
 
 
     def send(self, client, data):
-#给每个客户端发送data
-    try:
-        client.send(data.decode('utf-8'))
-    except:
-        self.clients.remove(client)
+        #给每个客户端发送data
+        try:
+            client.send(data.decode('utf-8'))
+        except:
+            self.clients.remove(client)
 
 
 
     def run(self):
-#依次将接收到的消息再发给所有客户端
-    for message in self.pubsub.listen():
-        if message['type'] == 'message',
-            data = message.get('data')
-            for client in self.clients:
-                gevent.spawn(self.send, client, data)
+        #依次将接收到的消息再发给所有客户端
+        for message in self.pubsub.listen():
+            if message['type'] == 'message':
+                data = message.get('data')
+                for client in self.clients:
+                    gevent.spawn(self.send, client, data)
 
 
 

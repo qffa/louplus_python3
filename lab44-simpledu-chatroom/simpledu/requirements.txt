@@ -10,3 +10,8 @@ faker
 flask-sockets
 gunicorn
 redis
+
+
+$ gnuicorn -k flask_sockets.worker -b 127.0.0.1:5000 mange:app
+
+

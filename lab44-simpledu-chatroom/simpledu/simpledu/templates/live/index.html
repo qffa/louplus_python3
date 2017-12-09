@@ -36,7 +36,7 @@
         <div id="message-box">
 
         </div>
-        <div class="iput-group" id="message-from">
+        <div class="iput-group" id="message-form">
             <input type="text" class="form-control">
             <span class="input-group-btn">
                 <button class="btn btn primary" type="button">发言</button>
@@ -78,7 +78,42 @@ if (flvjs.isSupported()){
 
 </script>
 
+<script>
+    var inbox = new WebSocket('ws://' + location.host + "/ws/recv");
+    var outbox = new WebSocket('ws://' + location.host + "/ws/send");
+    
+    $("#message-form button").on("click", function(event){
+            text = $('#message-form input').val();
+            console.log(text)
+            username = $('#username').text();
+            outbox.send(JSON.stringify({username: username, text: text}));
+            //提交后，将输入框设置为空
+            $('#message-form input').val('');
+            }
+            
+            );
 
+    inbox.onmessage = function(message){
+        console.log(message);
+        var data = JSON.parse(message.data);
+        $("#message-box").append('<p><b>' + data.username + '</b>' + ': ' + data.text + '</p>');
+    };
+
+
+    inbox.onclose = function(){
+        this.inbox = new WebSocket('ws://' + location.host + "/ws/recv");
+        };
+
+
+    outbox.onclose = function(){
+        this.outbox = new WebSocket('ws://' + location.host + "/ws/send");
+    };
+
+
+
+
+
+</script>
 
 
 

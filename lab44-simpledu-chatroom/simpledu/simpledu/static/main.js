@@ -1,1 +1,1 @@
-alert('Hello, Simpleud!')
+alert('Hello, Simpledu!')
