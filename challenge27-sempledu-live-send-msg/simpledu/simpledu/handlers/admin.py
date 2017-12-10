@@ -145,14 +145,12 @@ def delete_user(user_id):
 
 
 
-@admin.route('/message', methods=['GET', 'POST'])
+@admin.route('/message')
 @admin_required
 def send_msg():
     form = MsgForm()
-    if form.validate_on_submit():
-
-        pass
-
-
-
     return render_template('admin/send_msg.html', form=form)
+
+
+
+
