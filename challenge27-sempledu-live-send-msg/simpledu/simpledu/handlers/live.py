@@ -26,5 +26,6 @@ def send_msg():
         message = json.dumps(message)
         r.publish('chat', message)
         return redirect(url_for('admin.send_msg'))
+    return redirect(url_for('admin.send_msg'))
 
 
